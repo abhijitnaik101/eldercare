@@ -70,7 +70,7 @@ const SearchPage = () => {
           filteredCaretakers.map((caretaker) => (
             <li
               key={caretaker.id}
-              className="border border-gray-300 rounded-lg p-4 bg-white shadow-md flex items-center space-x-4 transition-transform transform hover:scale-105 hover:shadow-lg"
+              className="cursor-pointer border border-gray-300 rounded-lg p-4 bg-white shadow-md flex items-center space-x-4 transition-transform transform hover:scale-105 hover:shadow-lg"
             >
               {caretaker.profileImage ? (
                 <img

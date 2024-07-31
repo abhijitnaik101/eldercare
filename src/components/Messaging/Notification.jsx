@@ -6,7 +6,7 @@ const Notification = () => {
   const notifications = useRecoilValue(notificationsState);
 
   return (
-    <div className="container mx-auto py-10">
+    <section className="container mx-auto py-10">
       <h2 className="text-2xl mb-4">Notifications</h2>
       <ul>
         {notifications.map((note) => (
@@ -15,7 +15,7 @@ const Notification = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

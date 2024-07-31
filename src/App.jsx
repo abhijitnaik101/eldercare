@@ -17,7 +17,6 @@ const App = () => {
   return (
     <RecoilRoot>
       <Router>
-        <div className="App">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
@@ -31,7 +30,6 @@ const App = () => {
             <Route path="/notifications" element={<Notification />} />
             <Route path="/family-profile" element={<FamilyProfile/>} />
           </Routes>
-        </div>
       </Router>
     </RecoilRoot>
   );
