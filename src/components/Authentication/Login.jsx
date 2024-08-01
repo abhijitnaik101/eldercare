@@ -1,10 +1,9 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { authState } from '../../atoms/authState';
 import { caretakersState } from '../../atoms/caretakersState';
 import { familyState } from '../../atoms/familyState';
-import { MdEmojiFoodBeverage } from 'react-icons/md';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '', role: 'family' });
@@ -14,7 +13,9 @@ const Login = () => {
   const families = useRecoilValue(familyState);
   const navigate = useNavigate();
 
-  const onChange = useCallback((e) => setFormData({ ...formData, [e.target.name]: e.target.value }), []);
+  const { role } = formData;
+
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ const Login = () => {
     // If not in session storage, then check from API
     else {
       if (formData.role === 'family') {
-        const foundFamily = families.find(family => family.email === formData.email);
+        const foundFamily = families.find(family => family.contact === formData.email);
         if (foundFamily) {
           setAuthState({ isAuthenticated: true, user: foundFamily });
           navigate('/dashboard');
@@ -37,7 +38,7 @@ const Login = () => {
           setLoginfailure(true);
         }
       } else {
-        const foundCaretaker = caretakers.find(caretaker => caretaker.email === formData.email);
+        const foundCaretaker = caretakers.find(caretaker => caretaker.contact === formData.email);
         if (foundCaretaker) {
           setAuthState({ isAuthenticated: true, user: foundCaretaker });
           navigate('/caretaker-dashboard');
@@ -53,7 +54,6 @@ const Login = () => {
   };
 
 
-
   return (
     <div className="flex items-center justify-center min-h-screen py-6 px-4 bg-gray-50">
       <div className="w-full max-w-lg bg-white p-8 border border-gray-200 rounded-lg shadow-md">
@@ -62,12 +62,16 @@ const Login = () => {
           Username doesn't exist
         </p> : <></>}
         <form onSubmit={onSubmit} className="space-y-6">
-          <LoginField type="email" label="Email" placeholder="Enter your email" value={formData.email} onChange={onChange} />
-          <LoginField type="password" label="Password" placeholder="Enter your password" value={formData.password} onChange={onChange} />
+          <LoginField type="email" label="Email" placeholder="Enter your email" onChange={(e) => {
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+          }} />
+          <LoginField type="password" label="Password" placeholder="Enter your password" onChange={(e) => {
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+          }} />
           <label htmlFor="role" className="block text-gray-600 mb-1">Role</label>
           <select id='role'
             name='role'
-            value={formData.role}
+            value={role}
             onChange={onChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
           >
@@ -95,7 +99,7 @@ const Login = () => {
   );
 };
 
-const LoginField = memo(({ type, label, placeholder }) => {
+const LoginField = memo(({ type, label, placeholder, onChange }) => {
   return <>
     <label htmlFor={type} className="block text-gray-600 mb-1">{label}</label>
     <input

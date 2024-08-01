@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authState } from '../../atoms/authState';
 import { caretakersState } from '../../atoms/caretakersState';
@@ -7,10 +7,16 @@ const CareTakerProfile = () => {
   const { user } = useRecoilValue(authState);
   const caretakers = useRecoilValue(caretakersState);
   const setCaretakers = useSetRecoilState(caretakersState);
-  const caretaker = caretakers.find(c => c.name === user.name);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [caretaker, setCaretaker] = useState(null);
   const [skill, setSkill] = useState("");
+
+  useEffect(() => {
+    const caretaker = caretakers.find(c => c.name === user.name);
+    setCaretaker(caretaker);
+  }, [caretakers, user]);
+
   const [editedProfile, setEditedProfile] = useState({ ...caretaker });
 
   const handleChange = (e) => {
@@ -72,10 +78,8 @@ const CareTakerProfile = () => {
             />
             <button
               onClick={() => {
-                let skillbuffer = editedProfile.skills;
-                skillbuffer.push(skill);
                 setEditedProfile({
-                  ...editedProfile, skills: skillbuffer
+                  ...editedProfile, skills: (myskills) => [...myskills, skill]
                 });
               }}
               className="bg-blue-500 text-white px-4 py-2 rounded-lg my-2"
@@ -167,7 +171,7 @@ const CareTakerProfile = () => {
               className="w-32 h-32 object-cover rounded-full mb-4 sm:mb-0 sm:mr-4"
             />
             <div>
-              <h3 className="text-2xl font-semibold text-indigo-600 mb-2">user.name</h3>
+              <h3 className="text-2xl font-semibold text-indigo-600 mb-2">{user.name}</h3>
               <p className="text-gray-700 mb-1"><strong>Skills:</strong> Not added yet</p>
               <p className="text-gray-700 mb-1"><strong>Location:</strong> -</p>
               <p className="text-gray-700 mb-1"><strong>Rating:</strong> No Ratings</p>

@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { authState } from '../../atoms/authState';
 import FamilyProfile from '../Family/FamilyProfile';
 import SearchPage from '../SearchPage';
 import Messages from '../Messaging/Messages';
 import Notification from '../Messaging/Notification';
-import { useNavigate } from 'react-router-dom';
 
 const FamilyDashboard = () => {
-  const navigate = useNavigate();
-  const loginuser = sessionStorage.getItem('user');
-  if (!loginuser) {
-    navigate('/register');
-    return;
-  }
-  const jsonuser = JSON.parse(loginuser);
-  const setAuthState = useSetRecoilState(authState);
-  setAuthState({isAuthenticated: true, user: jsonuser})
   const { user } = useRecoilValue(authState);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeComponent, setActiveComponent] = useState('profile'); // Initial component

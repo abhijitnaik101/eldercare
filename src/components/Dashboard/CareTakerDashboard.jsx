@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { authState } from '../../atoms/authState';
 import CareTakerProfile from '../CareTaker/CareTakerProfile';
 import CareTakerSchedule from '../CareTaker/CareTakerSchedule';
@@ -8,16 +7,6 @@ import Messages from '../Messaging/Messages';
 import Notification from '../Messaging/Notification';
 
 const CareTakerDashboard = () => {
-  const navigate = useNavigate();
-  const loginUser = sessionStorage.getItem('careuser');
-  if (!loginUser) {
-    navigate('/register');
-    return;
-  }
-
-  const jsonloginuser = JSON.parse(loginUser);
-  const setAuthState = useSetRecoilState(authState);
-  setAuthState({ isAuthenticated: true, user: jsonloginuser });
   const { user } = useRecoilValue(authState);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeComponent, setActiveComponent] = useState('profile'); // Initial component
