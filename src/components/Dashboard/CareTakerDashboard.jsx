@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { authState } from '../../atoms/authState';
@@ -17,7 +17,7 @@ const CareTakerDashboard = () => {
 
   const jsonloginuser = JSON.parse(loginUser);
   const setAuthState = useSetRecoilState(authState);
-  setAuthState({isAuthenticated: true, user: jsonloginuser});
+  setAuthState({ isAuthenticated: true, user: jsonloginuser });
   const { user } = useRecoilValue(authState);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeComponent, setActiveComponent] = useState('profile'); // Initial component
@@ -39,17 +39,30 @@ const CareTakerDashboard = () => {
     }
   };
 
+  const SidebarItem = memo(({component, text}) => {
+    return <li>
+      <button
+        onClick={() => {
+          setActiveComponent(component);
+          toggleSidebar();
+        }}
+        className="block text-gray-800 hover:bg-blue-50 px-4 py-2 rounded-lg transition duration-300 w-full text-left"
+      >
+        {text}
+      </button>
+    </li>
+  });
+
   return (
-    <div className="flex min-h-screen bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500">
+    <section className="flex min-h-screen bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500">
       {/* Sidebar Menu */}
       <div
         className={`fixed inset-0 bg-gray-800 bg-opacity-25 z-0 md:hidden ${isSidebarOpen ? '' : 'hidden'}`}
         onClick={toggleSidebar}
       ></div>
-      <div
-        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg border-r border-gray-300 transform ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:shadow-none`}
+      <aside
+        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg border-r border-gray-300 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:shadow-none`}
       >
         <div className="p-6 flex flex-col h-full">
           <button
@@ -68,53 +81,13 @@ const CareTakerDashboard = () => {
           </button>
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">CareTaker Dashboard</h2>
           <ul className="space-y-4 flex-1">
-            <li>
-              <button
-                onClick={() => {
-                  setActiveComponent('profile');
-                  toggleSidebar();
-                }}
-                className="block text-gray-800 hover:bg-blue-50 px-4 py-2 rounded-lg transition duration-300 w-full text-left"
-              >
-                Care Taker Profile
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setActiveComponent('schedule');
-                  toggleSidebar();
-                }}
-                className="block text-gray-800 hover:bg-blue-50 px-4 py-2 rounded-lg transition duration-300 w-full text-left"
-              >
-                Care Taker Schedule
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setActiveComponent('messages');
-                  toggleSidebar();
-                }}
-                className="block text-gray-800 hover:bg-blue-50 px-4 py-2 rounded-lg transition duration-300 w-full text-left"
-              >
-                Messages
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setActiveComponent('notifications');
-                  toggleSidebar();
-                }}
-                className="block text-gray-800 hover:bg-blue-50 px-4 py-2 rounded-lg transition duration-300 w-full text-left"
-              >
-                Notifications
-              </button>
-            </li>
+            <SidebarItem component='profile' text="Care Taker Profile" />
+            <SidebarItem component='schedule' text="Care Taker Schedule" />
+            <SidebarItem component='messages' text="Messages" />
+            <SidebarItem component='notifications' text="Notifications" />
           </ul>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
       <div className="flex-1 p-8">
@@ -139,7 +112,7 @@ const CareTakerDashboard = () => {
           {renderActiveComponent()}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

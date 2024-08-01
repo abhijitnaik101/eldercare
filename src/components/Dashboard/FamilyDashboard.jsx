@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authState } from '../../atoms/authState';
 import FamilyProfile from '../Family/FamilyProfile';
 import SearchPage from '../SearchPage';
 import Messages from '../Messaging/Messages';
 import Notification from '../Messaging/Notification';
+import { useNavigate } from 'react-router-dom';
 
 const FamilyDashboard = () => {
+  const navigate = useNavigate();
+  const loginuser = sessionStorage.getItem('user');
+  if (!loginuser) {
+    navigate('/register');
+    return;
+  }
+  const jsonuser = JSON.parse(loginuser);
+  const setAuthState = useSetRecoilState(authState);
+  setAuthState({isAuthenticated: true, user: jsonuser})
   const { user } = useRecoilValue(authState);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeComponent, setActiveComponent] = useState('profile'); // Initial component
@@ -29,13 +39,13 @@ const FamilyDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-teal-400 via-green-500 to-lime-500">
+    <section className="flex min-h-screen bg-gradient-to-r from-teal-400 via-green-500 to-lime-500">
       {/* Sidebar Menu */}
       <div
         className={`fixed inset-0 bg-gray-800 bg-opacity-25 z-0 md:hidden ${isSidebarOpen ? '' : 'hidden'}`}
         onClick={toggleSidebar}
       ></div>
-      <div
+      <aside
         className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg border-r border-gray-300 transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:shadow-none`}
@@ -103,7 +113,7 @@ const FamilyDashboard = () => {
             </li>
           </ul>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
       <div className="flex-1 p-8">
@@ -128,7 +138,7 @@ const FamilyDashboard = () => {
           {renderActiveComponent()}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
