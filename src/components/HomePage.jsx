@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import heroImage from '../assets/hero.jpg'; // Assuming this is used in other sections
+import SeniorCare from '../assets/SeniorCare.jpg';
+import services1 from '../assets/services1.jpg';
+import services2 from '../assets/services2.jpg';
+import services3 from '../assets/services3.jpg';
+import testimonial1 from '../assets/testimonial1.jpeg'
+import testimonial2 from '../assets/testimonial2.jpg'
+import testimonial3 from '../assets/testimonial3.jpg'
+import testimonial4 from '../assets/testimonial4.jpg'
 
 const HomePage = () => {
   useEffect(() => {
@@ -12,7 +20,7 @@ const HomePage = () => {
   return (
     <section className='w-full overflow-x-hidden'>
       {/* Hero Section */}
-      <FrontPageSection />
+      <HeroSection />
 
       {/* Our Services Section */}
       <section id="services" className="container mx-auto py-20">
@@ -20,13 +28,13 @@ const HomePage = () => {
           Our Services
         </h2>
         <div className="flex flex-wrap -mx-4 max-md:justify-center max-md:flex-col max-md:px-6">
-          <ServiceCard aos_delay="300" heading="Personalized Care Plans">
+          <ServiceCard aos_delay="300" heading="Personalized Care Plans" image={services1}>
             <p>Customizable care plans tailored to individual needs.</p>
           </ServiceCard>
-          <ServiceCard aos_delay="400" heading="Professional Caretakers">
+          <ServiceCard aos_delay="400" heading="Professional Caretakers" image={services2}>
             <p>Experienced and compassionate caretakers for your loved ones.</p>
           </ServiceCard>
-          <ServiceCard aos_delay="500" heading="24/7 Availability">
+          <ServiceCard aos_delay="500" heading="24/7 Availability" image={services3}>
             <p>We are always available to provide assistance whenever needed.</p>
           </ServiceCard>
         </div>
@@ -55,13 +63,13 @@ const HomePage = () => {
         <div className="container mx-auto text-center">
           <h2 className="text-5xl font-bold mb-12" data-aos="fade-down">Testimonials</h2>
           <div className="flex flex-wrap justify-center items-stretch -mx-4">
-            <Testimonial aos_delay="300" image={heroImage} name="Jane Doe">
+            <Testimonial aos_delay="300" image={testimonial3} name="Jane Doe">
               "SeniorCare has been a lifesaver. The caretakers are professional and kind."
             </Testimonial>
-            <Testimonial aos_delay="400" image={heroImage} name="John Smith">
+            <Testimonial aos_delay="400" image={testimonial1} name="John Smith">
               "The personalized care plans have made a huge difference for my mother."
             </Testimonial>
-            <Testimonial aos_delay="500" image={heroImage} name="Emily JOhnson">
+            <Testimonial aos_delay="500" image={testimonial4} name="Emily JOhnson">
               "I highly recommend SeniorCare for anyone needing reliable support."
             </Testimonial>
           </div>
@@ -77,7 +85,7 @@ const HomePage = () => {
           </p>
           <Link
             to="/register"
-            className="bg-green-600 text-white px-8 py-4 rounded-lg shadow-lg transform hover:scale-110 hover:shadow-xl transition-transform duration-300"
+            className="bg-violet-600 text-white px-8 py-4 rounded-lg shadow-lg transform hover:scale-110 hover:shadow-xl transition-transform duration-300"
             data-aos="zoom-in">
             Register Now
           </Link>
@@ -87,7 +95,7 @@ const HomePage = () => {
   );
 };
 
-const FrontPageSection = () => {
+const HeroSection = () => {
   return (<>
     <section className="relative bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white py-12 px-5 md:py-16 md:px-18">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
@@ -107,7 +115,7 @@ const FrontPageSection = () => {
         </div>
         <div className="md:w-5/12" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
           <img
-            src={heroImage}
+            src={SeniorCare}
             alt="Elderly Care"
             className="w-full h-auto object-cover rounded-lg shadow-lg"
           />
@@ -117,14 +125,14 @@ const FrontPageSection = () => {
   </>);
 };
 
-const ServiceCard = ({ aos_delay, heading, children }) => {
+const ServiceCard = ({ aos_delay, heading, children, image }) => {
   return (
     <div className="md:w-1/3 px-4 mb-8" data-aos="fade-up" data-aos-delay={aos_delay}>
       <div className="bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 hover:shadow-xl transition-transform duration-300 h-full">
         <img
-          src="https://via.placeholder.com/500x300"
+          src={image}
           alt="Personalized Care Plans"
-          className="w-full h-40 object-cover rounded-t-lg mb-4"
+          className="w-full h-40 object-contain rounded-t-lg mb-4"
         />
         <h3 className="text-3xl font-bold mb-4">{heading}</h3>
         {children}
@@ -151,7 +159,7 @@ const Testimonial = ({ aos_delay, image, name, children }) => {
         <img
           src={image}
           alt="Testimonial 1"
-          className="w-16 h-16 rounded-full mb-4 mx-auto"
+          className="w-16 h-16 object-cover rounded-full mb-4 mx-auto"
         />
         <p className="text-lg mb-2">
           {children}

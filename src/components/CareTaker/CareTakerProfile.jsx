@@ -9,16 +9,17 @@ const CareTakerProfile = () => {
   const setCaretakers = useSetRecoilState(caretakersState);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [caretaker, setCaretaker] = useState(null);
+  const [caretaker, setCaretaker] = useState(caretakers[0]);
   const [skill, setSkill] = useState("");
 
   useEffect(() => {
-    const caretaker = caretakers.find(c => c.name === user.name);
+    console.log("inside useEffecvt");
+    const caretaker = caretakers.find((c) => c.name === user.name);
     setCaretaker(caretaker);
   }, [caretakers, user]);
 
   const [editedProfile, setEditedProfile] = useState({ ...caretaker });
-
+  console.log(caretakers);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedProfile({ ...editedProfile, [name]: value });
@@ -43,7 +44,7 @@ const CareTakerProfile = () => {
     );
     setIsEditing(false);
   };
-
+  console.log(caretaker);
   return (
     <section className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="relative mb-8">
@@ -166,18 +167,18 @@ const CareTakerProfile = () => {
         <div className="bg-white shadow-lg rounded-lg border p-6 mb-4">
           <div className="flex flex-col sm:flex-row items-start mb-4">
             <img
-              src="https://via.placeholder.com/150"
+              src={caretaker.profileImage}
               alt="Profile"
               className="w-32 h-32 object-cover rounded-full mb-4 sm:mb-0 sm:mr-4"
             />
             <div>
               <h3 className="text-2xl font-semibold text-indigo-600 mb-2">{user.name}</h3>
-              <p className="text-gray-700 mb-1"><strong>Skills:</strong> Not added yet</p>
-              <p className="text-gray-700 mb-1"><strong>Location:</strong> -</p>
-              <p className="text-gray-700 mb-1"><strong>Rating:</strong> No Ratings</p>
-              <p className="text-gray-700 mb-1"><strong>Pricing:</strong> $0/hour</p>
+              <p className="text-gray-700 mb-1"><strong>Skills:</strong> {caretaker.skills.map((skill) => <span>{skill}, </span>)}</p>
+              <p className="text-gray-700 mb-1"><strong>Location:</strong>{caretaker.location}</p>
+              <p className="text-gray-700 mb-1"><strong>Rating:</strong> {caretaker.rating}</p>
+              <p className="text-gray-700 mb-1"><strong>Pricing:</strong> {caretaker.pricing}</p>
               <p className="text-gray-700 mb-1"><strong>Experience:</strong> 0 years</p>
-              <p className="text-gray-700 mb-1"><strong>Description:</strong> -</p>
+              <p className="text-gray-700 mb-1"><strong>Description:</strong> {caretaker.description}</p>
             </div>
           </div>
           <button

@@ -1,4 +1,8 @@
 import { atom } from 'recoil';
+import testimonial1 from '../assets/testimonial1.jpeg';
+import testimonial2 from '../assets/testimonial2.jpg';
+import testimonial3 from '../assets/testimonial3.jpg';
+import testimonial4 from '../assets/testimonial4.jpg';
 
 const initialCareTakers = [
   {
@@ -16,7 +20,7 @@ const initialCareTakers = [
     pricing: 25, // Pricing per hour in USD
     bio: 'Alice has over 10 years of experience in nursing and elderly care. She is compassionate and dedicated.',
     contact: 'alice@example.com',
-    profileImage: 'https://via.placeholder.com/150',
+    profileImage: testimonial4,
   },
   {
     id: 2,
@@ -33,7 +37,7 @@ const initialCareTakers = [
     pricing: 20, // Pricing per hour in USD
     bio: 'Bob is an experienced caretaker with a friendly and approachable personality. He excels in providing companionship and assistance with daily activities.',
     contact: 'bob@example.com',
-    profileImage: 'https://via.placeholder.com/150',
+    profileImage: testimonial2,
   },
   {
     id: 3,
@@ -50,7 +54,7 @@ const initialCareTakers = [
     pricing: 22, // Pricing per hour in USD
     bio: 'Charlie is a versatile caretaker who is great with outdoor activities and pet care. He has a cheerful disposition and is always ready to help.',
     contact: 'charlie@example.com',
-    profileImage: 'https://via.placeholder.com/150',
+    profileImage: testimonial3,
   },
   {
     id: 4,
@@ -67,7 +71,7 @@ const initialCareTakers = [
     pricing: 30, // Pricing per hour in USD
     bio: 'Diana is a certified physical therapist with over 15 years of experience. She is dedicated to improving the quality of life of her clients.',
     contact: 'diana@example.com',
-    profileImage: 'https://via.placeholder.com/150',
+    profileImage: testimonial1,
   },
   {
     id: 5,
@@ -84,7 +88,7 @@ const initialCareTakers = [
     pricing: 28, // Pricing per hour in USD
     bio: 'Edward has extensive experience in medical assistance and caregiving. He is known for his reliable and trustworthy nature.',
     contact: 'edward@example.com',
-    profileImage: 'https://via.placeholder.com/150',
+    profileImage: testimonial2,
   },
 ];
 
